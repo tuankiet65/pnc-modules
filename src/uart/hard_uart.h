@@ -2,47 +2,56 @@
 	#define HARD_UART_H
 	
 	#include <avr/io.h>
+	#include <avr/interrupt.h>
 
-	#include "uart/protocol.h"
 	#include "util/bit.h"
 	
-	typedef void (*receive_handler)(rx_data&);
+	#define BAUD 9600
+	#include <util/setbaud.h>
 
 	#define STATE_IDLE 0
-	#define STATE_CMD 1
+	#define STATE_TYPE 1
 	#define STATE_LEN 2
 	#define STATE_DATA 3
 
+	#define BUF_SIZE 20
+
+	#define NEXT_BUF_PTR(ptr) ((ptr + 1) % BUF_SIZE)
+	#define INC_BUF_PTR(ptr) ((ptr) = NEXT_BUF_PTR(ptr))
+
+	typedef struct {
+		volatile uint8_t head = 0;
+		volatile uint8_t tail = 0;
+		volatile uint8_t data[BUF_SIZE];
+	} ring_buffer;
+
 	class _Serial {
 	private:
-		bool if_read_error(){
-			static uint8_t ucsra_tmp = UCSRA;
+		
+	public:
+		ring_buffer rx_buf, tx_buf;	
+		bool is_read_error(){
+			static volatile uint8_t ucsra_tmp = UCSRA;
 			return bit_is_on(ucsra_tmp, FE) && bit_is_on(ucsra_tmp, DOR);
 		}
 
-		inline void send_byte(uint8_t byte){
+		void send_byte(uint8_t byte){
 			UDR = byte;
 		}
 
-		inline uint8_t get_byte(){
+		uint8_t get_byte(){
 			return UDR;
 		}
 
-		volatile uint8_t rx_state = STATE_CMD, tx_state = STATE_IDLE;
-		volatile uint8_t rx_ptr, tx_ptr;
-	public:
-		rx_data received_data;
-		tx_data transmit_data;
+		void begin(uint32_t baud);
+		void send(uint8_t chr);
 
-		receive_handler on_received;
+		uint8_t available();
+		uint8_t read();
 
-		void begin();
-		void send(tx_data &tx);
-		void register_receive_handler(receive_handler recv){
-			on_received = recv;
-		}
-	}
-
+		void tx_ready_interrupt();
+		void rx_available_interrupt();
+	};
 	extern _Serial Serial;
 
 #endif

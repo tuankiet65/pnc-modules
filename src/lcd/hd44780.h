@@ -13,6 +13,7 @@
 #define CMD_SET_DDADDR(address)              0b10000000 | (address)
 
 #include <util/delay.h>
+#include <stddef.h>
 #include "io/io.h"
 
 const uint8_t LCD_START_ADDR[4] {
@@ -24,9 +25,9 @@ const uint8_t LCD_START_ADDR[4] {
 
 class LCD_HD44780_16x2 {
 private:
-	uint8_t rs, rw, en, d[8];
+	volatile uint8_t rs, rw, en, d[8];
 	
-	bool disp = true, cursor = false, blink = false;
+	volatile bool disp = true, cursor = false, blink = false;
 
 	void enable();
 	void do_command(uint8_t command);
@@ -51,6 +52,7 @@ public:
 	void clear();
 	void home();
 	void write(char c);
+	void write(char *str, size_t len);
 	void set_position(uint8_t col, uint8_t row);
 	void set_cursor(bool state);
 	void set_blink(bool state);

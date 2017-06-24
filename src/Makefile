@@ -5,16 +5,17 @@ OBJCOPY = avr-objcopy
 AVRDUDE = avrdude
 CXX_FLAGS = -Os \
             -fno-exceptions \
-            -I. -o build/lcd_16x2_block \
+            -I. \
             -std=c++14 \
-            -flto \
+       	    -flto \
             -Wall \
             -Wextra \
             -fdata-sections \
             -ffunction-sections \
             -Wl,--gc-sections \
             -pedantic \
-            -Wl,--relax
+            -Wl,--relax \
+            -fno-threadsafe-statics
 CXX_FLAGS_ATTINY2313 = -mmcu=attiny2313 -DF_CPU=8000000UL
 
 lcd_block: build/io.o lcd/hd44780.o lcd_16x2_block.cpp uart/hard_uart.o

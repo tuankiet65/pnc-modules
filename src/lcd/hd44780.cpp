@@ -19,7 +19,7 @@ void LCD_HD44780_16x2::do_command(uint8_t command){
 	digital_write(rw, LOW);
 	digital_write(rs, LOW);
 
-	int i;
+	static volatile int i;
 	for (i = 0; i < 8; i++){
 		set_pin_mode(d[i], OUTPUT);
 		digital_write(d[i], (command >> i) & 1);
@@ -54,6 +54,7 @@ void LCD_HD44780_16x2::begin(){
 
 	// Initialization is finished here
 	do_command(CMD_DISP_ONOFF(disp, cursor, blink));
+	clear();
 }
 
 void LCD_HD44780_16x2::clear(){
@@ -73,13 +74,20 @@ void LCD_HD44780_16x2::write(char c){
 	digital_write(rw, LOW);
 	digital_write(rs, HIGH);
 
-	int i;
+	static volatile int i;
 	for (i = 0; i < 8; i++){
 		set_pin_mode(d[i], OUTPUT);
 		digital_write(d[i], (((uint8_t)c >> i) & 1));
 	}
 
 	enable();
+}
+
+void LCD_HD44780_16x2::write(char str[], size_t len){
+	static volatile size_t i;
+	for (i = 0; i < len; i++){
+		write(str[i]);
+	}
 }
 
 void LCD_HD44780_16x2::set_position(uint8_t row, uint8_t col){
@@ -92,7 +100,7 @@ void LCD_HD44780_16x2::set_position(uint8_t row, uint8_t col){
 	digital_write(rs, LOW);
 
 	uint8_t command = CMD_SET_DDADDR(addr);
-	int i;
+	static volatile int i;
 	for (i = 0; i < 8; i++){
 		set_pin_mode(d[i], OUTPUT);
 		digital_write(d[i], (((uint8_t)command >> i) & 1));
