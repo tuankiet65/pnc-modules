@@ -14,7 +14,7 @@
 	#define STATE_LEN 2
 	#define STATE_DATA 3
 
-	#define BUF_SIZE 20
+	#define BUF_SIZE 10
 
 	#define NEXT_BUF_PTR(ptr) ((ptr + 1) % BUF_SIZE)
 	#define INC_BUF_PTR(ptr) ((ptr) = NEXT_BUF_PTR(ptr))

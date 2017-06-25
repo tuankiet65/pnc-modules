@@ -77,7 +77,6 @@ void _Serial::rx_available_interrupt(){
 
 	rx_buf.data[rx_buf.tail] = get_byte();
 	INC_BUF_PTR(rx_buf.tail);
-
 }
 
 ISR(USART_UDRE_vect){
