@@ -18,9 +18,9 @@ CXX_FLAGS = -Os \
 CXX_FLAGS_ATTINY2313 = -mmcu=attiny2313 -DF_CPU=8000000UL
 
 lcd_block: build/io.o lcd/hd44780.o lcd_16x2_block.cpp uart/hard_uart.o
-	$(CXX) $(CXX_FLAGS) $(CXX_FLAGS_ATTINY2313) build/io.o lcd/hd44780.o uart/hard_uart.o lcd_16x2_block.cpp -o build/lcd_16x2_block
-	$(SIZE) build/lcd_16x2_block -C --mcu=attiny2313
-	$(OBJCOPY) -O ihex build/lcd_16x2_block build/lcd_16x2_block.hex
+	$(CXX) $(CXX_FLAGS) $(CXX_FLAGS_ATTINY2313) build/io.o lcd/hd44780.o uart/hard_uart.o lcd_16x2_block.cpp -o build/lcd_16x2_block.elf
+	$(SIZE) build/lcd_16x2_block.elf -C --mcu=attiny2313
+	$(OBJCOPY) -O ihex build/lcd_16x2_block.elf build/lcd_16x2_block.hex
 	$(AVRDUDE) -c usbasp -p t2313 -U flash:w:build/lcd_16x2_block.hex:i
 
 build/io.o: io/io.cpp io/io.h mcu/mcu.h util/bit.h
