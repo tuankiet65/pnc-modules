@@ -1,5 +1,22 @@
 #include "lcd/hd44780.h"
 
+void LCD_HD44780_16x2::_pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t dv){
+	set_pin_mode(rw, OUTPUT);
+	set_pin_mode(rs, OUTPUT);
+
+	digital_write(rw, rw_state);
+	digital_write(rs, rs_state);
+
+	static volatile uint8_t i;
+	for (i = 0; i < 8; i++){
+		set_pin_mode(d[i], OUTPUT);
+		digital_write(d[i], (dv & 1));
+		dv >>= 1;
+	}
+
+	enable();
+}
+
 void LCD_HD44780_16x2::enable(){
 	set_pin_mode(en, OUTPUT);
 
@@ -13,19 +30,7 @@ void LCD_HD44780_16x2::enable(){
 }
 
 void LCD_HD44780_16x2::do_command(uint8_t command){
-	set_pin_mode(rw, OUTPUT);
-	set_pin_mode(rs, OUTPUT);
-
-	digital_write(rw, LOW);
-	digital_write(rs, LOW);
-
-	static volatile int i;
-	for (i = 0; i < 8; i++){
-		set_pin_mode(d[i], OUTPUT);
-		digital_write(d[i], (command >> i) & 1);
-	}
-
-	enable();
+	_pin_write(LOW, LOW, command);
 
 	// delay for >= 37us (datasheet pg 24+25)
 	_delay_us(40);
@@ -68,24 +73,16 @@ void LCD_HD44780_16x2::home(){
 }
 
 void LCD_HD44780_16x2::write(char c){
-	set_pin_mode(rw, OUTPUT);
-	set_pin_mode(rs, OUTPUT);
-
-	digital_write(rw, LOW);
-	digital_write(rs, HIGH);
-
-	static volatile int i;
-	for (i = 0; i < 8; i++){
-		set_pin_mode(d[i], OUTPUT);
-		digital_write(d[i], (((uint8_t)c >> i) & 1));
-	}
-
-	enable();
+	_pin_write(LOW, HIGH, (uint8_t)c);
 }
 
 void LCD_HD44780_16x2::write(char str[], size_t len){
 	static volatile size_t i;
 	for (i = 0; i < len; i++){
+		if (str[i] == '\0'){
+			// end of string
+			return;
+		}
 		write(str[i]);
 	}
 }
@@ -93,18 +90,7 @@ void LCD_HD44780_16x2::write(char str[], size_t len){
 void LCD_HD44780_16x2::set_position(uint8_t row, uint8_t col){
 	uint8_t addr = LCD_START_ADDR[row] + col;
 
-	set_pin_mode(rw, OUTPUT);
-	set_pin_mode(rs, OUTPUT);
-
-	digital_write(rw, LOW);
-	digital_write(rs, LOW);
-
-	uint8_t command = CMD_SET_DDADDR(addr);
-	static volatile int i;
-	for (i = 0; i < 8; i++){
-		set_pin_mode(d[i], OUTPUT);
-		digital_write(d[i], (((uint8_t)command >> i) & 1));
-	}
+	do_command(CMD_SET_DDADDR(addr));
 
 	enable();	
 }

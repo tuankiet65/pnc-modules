@@ -31,6 +31,7 @@ private:
 
 	void enable();
 	void do_command(uint8_t command);
+	void _pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t d);
 public:
 	LCD_HD44780_16x2(uint8_t rs, uint8_t rw, uint8_t en,
 		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
