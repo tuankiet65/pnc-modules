@@ -7,7 +7,7 @@
 	typedef struct {
 		uint8_t type;
 		uint8_t data_len;
-		uint8_t data[16];
+		uint8_t data[8];
 	} data_packet;
 
 	#define CMD_INFO 0
