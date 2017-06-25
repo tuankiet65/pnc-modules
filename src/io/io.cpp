@@ -27,15 +27,19 @@ uint8_t get_pin_mode(uint8_t pin_num){
 
 void set_pin_mode(uint8_t pin_num, uint8_t mode){
 	pin_definition pin = get_pin_definition(pin_num);
-	if (mode == INPUT){
-		bit_set_off((*pin.dd), pin.bit); // DDxn = 0
-		bit_set_off((*pin.port), pin.bit); // PORTxn = 0
-	} else if (mode == INPUT_PULLUP){
-		bit_set_off((*pin.dd), pin.bit); // DDxn = 0
-		bit_set_on((*pin.port), pin.bit); // PORTxn = 1
-	} else if (mode == OUTPUT){ // default to output low
-		bit_set_on((*pin.dd), pin.bit);
-		bit_set_off((*pin.port), pin.bit);
+	switch (mode){
+		case INPUT:
+			bit_set_off((*pin.dd), pin.bit); // DDxn = 0
+			bit_set_off((*pin.port), pin.bit); // PORTxn = 0
+			break;
+		case INPUT_PULLUP:
+			bit_set_off((*pin.dd), pin.bit); // DDxn = 0
+			bit_set_on((*pin.port), pin.bit); // PORTxn = 1
+			break;
+		case OUTPUT:
+			bit_set_on((*pin.dd), pin.bit);
+			bit_set_off((*pin.port), pin.bit);
+			break;
 	}
 }
 
