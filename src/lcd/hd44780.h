@@ -25,7 +25,7 @@ const uint8_t LCD_START_ADDR[4] {
 
 class LCD_HD44780_16x2 {
 private:
-	volatile uint8_t rs, rw, en, d[8];
+	uint8_t rs, rw, en, d[8], backlight_pin;
 	
 	volatile bool disp = true, cursor = false, blink = false;
 
@@ -35,7 +35,8 @@ private:
 public:
 	LCD_HD44780_16x2(uint8_t rs, uint8_t rw, uint8_t en,
 		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7){
+		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7,
+		uint8_t backlight_pin){
 		this->rs = rs;
 		this->rw = rw;
 		this->en = en;
@@ -47,6 +48,7 @@ public:
 		this->d[5] = d5;
 		this->d[6] = d6;
 		this->d[7] = d7;
+		this->backlight_pin = backlight_pin;
 	}
 
 	void begin();
@@ -58,6 +60,7 @@ public:
 	void set_cursor(bool state);
 	void set_blink(bool state);
 	void set_display(bool state);
+	void set_backlight(bool state);
 };
 
 #endif

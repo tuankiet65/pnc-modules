@@ -44,6 +44,9 @@ void LCD_HD44780_16x2::begin(){
 	// Wait for power supply
 	_delay_ms(40);
 
+	// Turn on the backlight first
+	set_backlight(true);
+	
 	// Set function register to 8 bit
 	do_command(CMD_FUNC_SET());
 	// Delay for 5 msec (> 4.1msec according to datasheet)
@@ -108,4 +111,9 @@ void LCD_HD44780_16x2::set_blink(bool state){
 void LCD_HD44780_16x2::set_display(bool state){
 	disp = state;
 	do_command(CMD_DISP_ONOFF(disp, cursor, blink));	
+}
+
+void LCD_HD44780_16x2::set_backlight(bool state){
+	set_pin_mode(backlight_pin, OUTPUT);
+	digital_write(backlight_pin, state);
 }

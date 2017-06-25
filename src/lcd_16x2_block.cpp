@@ -9,7 +9,8 @@
 
 LCD_HD44780_16x2 lcd(PIN_PA1, PIN_PA0, PIN_PD2,
 	                 PIN_PD3, PIN_PD4, PIN_PD5, PIN_PB4,
-	                 PIN_PB3, PIN_PB2, PIN_PB1, PIN_PB0);
+	                 PIN_PB3, PIN_PB2, PIN_PB1, PIN_PB0,
+	                 PIN_PD6);
 
 data_packet rx_data;
 uint8_t rx_state = STATE_TYPE, rx_ptr;
