@@ -61,7 +61,6 @@ void command(){
 			break;
 		default:
 			break;
-
 	}
 }
 
@@ -73,35 +72,38 @@ int main(){
 	Serial.begin(1200);
 	while (1){
 		if (Serial.available()){
-			if (rx_state == STATE_TYPE){
-				// read in command then move to STATE_LEN, ready to read len
-				rx_data.type = Serial.read();
-				rx_state = STATE_LEN;
-			} else if (rx_state == STATE_LEN){
-				// read in len then move to STATE_DATA, ready to read data
-				rx_data.data_len = Serial.read();
-				if (rx_data.data_len > sizeof(rx_data.data)){
-					// size is too large, discarding
-					rx_state = STATE_TYPE;	
-				} else {
-					rx_ptr = 0;
-					rx_state = STATE_DATA;
+			switch (rx_state){
+				case STATE_TYPE:
+					rx_data.type = Serial.read();
+					rx_state = STATE_LEN;
+					break;
+				case STATE_LEN:
+					// read in len then move to STATE_DATA, ready to read data
+					rx_data.data_len = Serial.read();
+					if (rx_data.data_len > sizeof(rx_data.data)){
+						// size is too large, discarding
+						rx_state = STATE_TYPE;	
+					} else {
+						rx_ptr = 0;
+						rx_state = STATE_DATA;
 
-					if (rx_data.data_len == 0){
+						if (rx_data.data_len == 0){
+							command();
+							rx_state = STATE_TYPE;
+						}
+					}
+					break;
+				case STATE_DATA:
+					// Read byte and increase pointer
+					rx_data.data[rx_ptr] = Serial.read();
+					rx_ptr++;
+
+					if (rx_ptr >= rx_data.data_len){
+						// All bytes have been received, calling handler
 						command();
 						rx_state = STATE_TYPE;
 					}
-				}
-			} else if (rx_state == STATE_DATA){
-				// Read byte and increase pointer
-				rx_data.data[rx_ptr] = Serial.read();
-				rx_ptr++;
-
-				if (rx_ptr >= rx_data.data_len){
-					// All bytes have been received, calling handler
-					command();
-					rx_state = STATE_TYPE;
-				}
+					break;
 			}
 		}
 	}
