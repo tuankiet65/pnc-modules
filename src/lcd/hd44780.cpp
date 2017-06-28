@@ -7,7 +7,7 @@ void LCD_HD44780_16x2::_pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t dv
 	digital_write(rw, rw_state);
 	digital_write(rs, rs_state);
 
-	static volatile uint8_t i;
+	uint8_t i;
 	for (i = 0; i < 8; i++){
 		set_pin_mode(d[i], OUTPUT);
 		digital_write(d[i], (dv & 1));
@@ -61,7 +61,7 @@ void LCD_HD44780_16x2::begin(){
 	do_command(CMD_FUNC_SET());
 
 	// Initialization is finished here
-	do_command(CMD_DISP_ONOFF(disp, cursor, blink));
+	do_command(CMD_DISP_ONOFF(disp_onoff_status));
 	clear();
 }
 
@@ -80,13 +80,13 @@ void LCD_HD44780_16x2::write(char c){
 }
 
 void LCD_HD44780_16x2::write(char str[], size_t len){
-	static volatile size_t i;
+	size_t i;
 	for (i = 0; i < len; i++){
-		if (str[i] == '\0'){
-			// end of string
+		if (str[i]){
+			write(str[i]);
+		} else {
 			return;
 		}
-		write(str[i]);
 	}
 }
 
@@ -94,23 +94,33 @@ void LCD_HD44780_16x2::set_position(uint8_t row, uint8_t col){
 	uint8_t addr = LCD_START_ADDR[row] + col;
 
 	do_command(CMD_SET_DDADDR(addr));
-
-	enable();	
 }
 
 void LCD_HD44780_16x2::set_cursor(bool state){
-	cursor = state;
-	do_command(CMD_DISP_ONOFF(disp, cursor, blink));
+	if (state){
+		bit_set_on(disp_onoff_status, CURSOR);
+	} else {
+		bit_set_off(disp_onoff_status, CURSOR);
+	}
+	do_command(CMD_DISP_ONOFF(disp_onoff_status));
 }
 
 void LCD_HD44780_16x2::set_blink(bool state){
-	blink = state;
-	do_command(CMD_DISP_ONOFF(disp, cursor, blink));
+	if (state){
+		bit_set_on(disp_onoff_status, BLINK);
+	} else {
+		bit_set_off(disp_onoff_status, BLINK);
+	}
+	do_command(CMD_DISP_ONOFF(disp_onoff_status));
 }
 
 void LCD_HD44780_16x2::set_display(bool state){
-	disp = state;
-	do_command(CMD_DISP_ONOFF(disp, cursor, blink));	
+	if (state){
+		bit_set_on(disp_onoff_status, DISPLAY);
+	} else {
+		bit_set_off(disp_onoff_status, DISPLAY);
+	}
+	do_command(CMD_DISP_ONOFF(disp_onoff_status));	
 }
 
 void LCD_HD44780_16x2::set_backlight(bool state){
