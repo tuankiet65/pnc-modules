@@ -2,8 +2,10 @@
 
 #define IO_H
 
-#include <stdint.h>
 #include <avr/interrupt.h>
+#include <util/atomic.h>
+#include <stdint.h>
+
 
 #include "util/bit.h"
 
