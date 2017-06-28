@@ -28,6 +28,10 @@ const PROGMEM uint8_t LCD_START_ADDR[4] {
 	0x30
 };
 
+#define TIMER_COMPARE_A_VALUE OCR0A
+
+extern uint8_t _lcd_backlight_pin_do_not_use;
+
 class LCD_HD44780_16x2 {
 private:
 	uint8_t rs, rw, en, d[8], backlight_pin;
@@ -37,6 +41,7 @@ private:
 	void enable();
 	void do_command(uint8_t command);
 	void _pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t d);
+	void _backlight_pwm_init();
 public:
 	LCD_HD44780_16x2(uint8_t rs, uint8_t rw, uint8_t en,
 		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
@@ -54,6 +59,7 @@ public:
 		this->d[6] = d6;
 		this->d[7] = d7;
 		this->backlight_pin = backlight_pin;
+		_lcd_backlight_pin_do_not_use = backlight_pin;
 	}
 
 	void begin();
@@ -65,7 +71,7 @@ public:
 	void set_cursor(bool state);
 	void set_blink(bool state);
 	void set_display(bool state);
-	void set_backlight(bool state);
+	void set_backlight(uint8_t brightness);
 };
 
 #endif

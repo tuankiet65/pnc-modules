@@ -1,5 +1,24 @@
 #include "lcd/hd44780.h"
 
+uint8_t _lcd_backlight_pin_do_not_use;
+
+void LCD_HD44780_16x2::_backlight_pwm_init(){
+	// Enable:
+	// * Compare A Interrupt 
+	// * Overflow interrupt
+	TIMSK = _BV(OCIE0A) | _BV(TOIE0);
+
+	// Set clock source = clk(cpu) / 256
+	// Slow enough not to cause flicker
+	TCCR0B = _BV(CS02);
+
+	// Enable interrupt;
+	sei();
+
+	// Enable backlight at maximum brightness
+	set_backlight(254);
+}
+
 void LCD_HD44780_16x2::_pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t dv){
 	set_pin_mode(rw, OUTPUT);
 	set_pin_mode(rs, OUTPUT);
@@ -44,8 +63,8 @@ void LCD_HD44780_16x2::begin(){
 	// Wait for power supply
 	_delay_ms(40);
 
-	// Turn on the backlight first
-	set_backlight(true);
+	// Initialize backlight PWM
+	_backlight_pwm_init();
 	
 	// Set function register to 8 bit
 	do_command(CMD_FUNC_SET());
@@ -123,7 +142,19 @@ void LCD_HD44780_16x2::set_display(bool state){
 	do_command(CMD_DISP_ONOFF(disp_onoff_status));	
 }
 
-void LCD_HD44780_16x2::set_backlight(bool state){
-	set_pin_mode(backlight_pin, OUTPUT);
-	digital_write(backlight_pin, state);
+void LCD_HD44780_16x2::set_backlight(uint8_t brightness){
+	if (brightness > 254){
+		brightness = 254;
+	}
+	TIMER_COMPARE_A_VALUE = brightness;
+}
+
+ISR(TIMER0_COMPA_vect){
+	set_pin_mode(_lcd_backlight_pin_do_not_use, OUTPUT);
+	digital_write(_lcd_backlight_pin_do_not_use, false);
+}
+
+ISR(TIMER0_OVF_vect){
+	set_pin_mode(_lcd_backlight_pin_do_not_use, OUTPUT);
+	digital_write(_lcd_backlight_pin_do_not_use, true);
 }

@@ -10,7 +10,7 @@
 	#define BAUD 9600
 	#include <util/setbaud.h>
 
-	#define BUF_SIZE 8
+	#define BUF_SIZE 4
 
 	#define NEXT_BUF_PTR(ptr) ((ptr + 1) % BUF_SIZE)
 	#define INC_BUF_PTR(ptr) ((ptr) = NEXT_BUF_PTR(ptr))
