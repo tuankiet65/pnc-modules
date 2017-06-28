@@ -91,7 +91,7 @@ void LCD_HD44780_16x2::write(char str[], size_t len){
 }
 
 void LCD_HD44780_16x2::set_position(uint8_t row, uint8_t col){
-	uint8_t addr = LCD_START_ADDR[row] + col;
+	uint8_t addr = pgm_read_byte(&(LCD_START_ADDR[row])) + col;
 
 	do_command(CMD_SET_DDADDR(addr));
 }

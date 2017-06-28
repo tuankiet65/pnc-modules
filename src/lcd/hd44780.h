@@ -16,13 +16,16 @@
 #define CURSOR 1
 #define BLINK 0
 
+#include <avr/pgmspace.h>
 #include <util/delay.h>
 #include <stddef.h>
 #include "io/io.h"
 
-const uint8_t LCD_START_ADDR[2] {
+const PROGMEM uint8_t LCD_START_ADDR[4] {
 	0x00,
 	0x40,
+	0x10,
+	0x30
 };
 
 class LCD_HD44780_16x2 {
