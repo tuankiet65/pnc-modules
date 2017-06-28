@@ -26,16 +26,23 @@ void _Serial::begin(uint32_t baud){
 }
 
 void _Serial::send(uint8_t chr){
+	// Put chr in tx buffer
 	tx_buf.data[tx_buf.tail] = chr;
-	bit_set_on(UCSRB, UDRIE);
-	while (NEXT_BUF_PTR(tx_buf.tail) == tx_buf.head); // wait for buffer to empty up
+
+	// Wait for the buffer to empty up
+	while (NEXT_BUF_PTR(tx_buf.tail) == tx_buf.head);
+
 	INC_BUF_PTR(tx_buf.tail);
+
+	// Enable UDR Ready Interrupt
+	bit_set_on(UCSRB, UDRIE);
 }
 
 void _Serial::tx_ready_interrupt(){
 	if (tx_buf.head == tx_buf.tail){
 		// nothing to send, buffer is empty
 		// however we have to disable this interrupt or else it will be called again
+		// (pretty weird)
 		// We enable the interrupt again in _Serial::send()
 
 		bit_set_off(UCSRB, UDRIE);
@@ -84,70 +91,5 @@ ISR(USART_UDRE_vect){
 }
 
 ISR(USART_RX_vect){
-	//lcd.write(UDR);
 	Serial.rx_available_interrupt();
 }
-
-// void _Serial::tx_ready_interrupt(){
-// 	if (tx_state == STATE_LEN){
-// 		send_byte(tx_data.data_len);
-// 		tx_state = STATE_DATA;
-// 		tx_ptr = 0;
-// 	} else if (tx_state == STATE_DATA){
-// 		if (tx_ptr >= tx_data.data_len){
-// 			tx_state = STATE_IDLE;
-// 		} else {
-// 			send_byte(tx_data.data[tx_ptr]);
-// 			tx_ptr++;
-// 		}
-// 	}
-// }
-
-// void _Serial::send(data_packet &tx){
-// 	tx_data = tx;
-// 	send_byte(tx_data.type);
-// 	tx_state = STATE_LEN;
-// 	while (tx_state != STATE_IDLE);
-// }
-
-// void _Serial::rx_available_interrupt(){
-// 	while ((UCSRA & (_BV(RXC))) == 0);
-// 	available = false;
-
-// 	if (is_read_error()){
-// 		// Read error occured, we abandoned currently received data
-
-// 		rx_state = STATE_TYPE;
-
-// 		// We still have to read out a byte, because if it isn't, then the RXC
-// 		// bit is still on => this interrupt will be called again.
-// 		get_byte();
-// 		return;
-// 	}
-
-// 	if (rx_state == STATE_TYPE){
-// 		// read in command then move to STATE_LEN, ready to read len
-// 		rx_data.type = get_byte();
-// 		rx_state = STATE_LEN;
-// 	} else if (rx_state == STATE_LEN){
-// 		// read in len then move to STATE_DATA, ready to read data
-// 		rx_data.data_len = get_byte();
-// 		if (rx_data.data_len > sizeof(rx_data.data)){
-// 			// size is too large, discarding
-// 			rx_state = STATE_TYPE;
-// 			return;
-// 		}
-// 		rx_ptr = 0;
-// 		rx_state = STATE_DATA;
-// 	} else if (rx_state == STATE_DATA){
-// 		// Read byte and increase pointer
-// 		rx_data.data[rx_ptr] = get_byte();
-// 		rx_ptr++;
-
-// 		if (rx_ptr >= rx_data.data_len){
-// 			// All bytes have been received, calling handler
-// 			available = true;
-// 			rx_state = STATE_TYPE;
-// 		}
-// 	}
-// }
