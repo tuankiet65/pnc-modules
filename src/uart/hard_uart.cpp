@@ -20,7 +20,7 @@ void _Serial::begin(uint32_t baud){
 	// - TX complete interrupt
 	// - RX
 	// - TX
-	UCSRB = _BV(RXCIE) | _BV(UDRIE) | _BV(RXEN) | _BV(TXEN);
+	UCSRB = _BV(RXCIE) | _BV(RXEN) | _BV(TXEN);
 
 	// No changes to UCSRC (UART, no parity, 1 stop bit, 8 bit character)
 }
