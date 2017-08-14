@@ -21,6 +21,9 @@ void command(data_packet rx){
 	response.data_len = 0;
 
 	switch (rx.type){
+		case CMD_INIT:
+			lcd.begin();
+			break;
 		case CMD_INFO:
 			response.data_len = 3;
 			response.data[0] = MODULE_TYPE_LCD;
@@ -88,6 +91,8 @@ void command(data_packet rx){
 			break;
 		default:
 			response.type = RESP_FAILURE;
+			response.data_len = 1;
+			response.data[0] = ERROR_INVALID_COMMAND;
 			break;
 	}
 	dpstream.send(response);

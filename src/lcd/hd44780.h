@@ -41,7 +41,6 @@ private:
 	void enable();
 	void do_command(uint8_t command);
 	void _pin_write(uint8_t rw_state, uint8_t rs_state, uint8_t d);
-	void _backlight_pwm_init();
 public:
 	LCD_HD44780_16x2(uint8_t rs, uint8_t rw, uint8_t en,
 		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
@@ -62,6 +61,7 @@ public:
 		_lcd_backlight_pin_do_not_use = backlight_pin;
 	}
 
+	void _backlight_pwm_init();
 	void begin();
 	void clear();
 	void home();

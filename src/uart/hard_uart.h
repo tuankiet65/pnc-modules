@@ -7,7 +7,7 @@
 	#include "uart/stream.h"
 	#include "util/bit.h"
 	
-	#define BAUD 9600
+	#define BAUD 38400
 	#include <util/setbaud.h>
 
 	#define BUF_SIZE 4

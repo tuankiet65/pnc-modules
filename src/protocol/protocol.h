@@ -4,7 +4,7 @@
 	
 	#include "uart/stream.h"
 	
-	#define PROTOCOL_BAUD 9600
+	#define PROTOCOL_BAUD 38400
 	
 	#define STATE_IDLE 0
 	#define STATE_TYPE 1
@@ -47,6 +47,7 @@
 		void send(data_packet &tx);
 	};
 
+	// need lcd reinit command
 	#define CMD_INFO 0
 	#define CMD_LCD_WRITE 1
 	#define CMD_LCD_HOME 2
@@ -56,6 +57,9 @@
 	#define CMD_LCD_TOGGLE_BLINK 6
 	#define CMD_LCD_SET_POSITION 7
 	#define CMD_LCD_TOGGLE_BACKLIGHT 8
+	#define CMD_INIT 9
+
+	#define CMD_NUMPAD_GET_BUTTON 10
 
 	#define RESP_SUCCESS 0
 	#define RESP_FAILURE 1
@@ -64,6 +68,8 @@
 	#define ERROR_TIMEOUT 0
 	#define ERROR_SIZE_TOO_LARGE 1
 	#define ERROR_WRONG_NUMBER_OF_ARGUMENT 2
+	#define ERROR_INVALID_COMMAND 3
 
 	#define MODULE_TYPE_LCD 1
+	#define MODULE_TYPE_NUMPAD 2
 #endif
