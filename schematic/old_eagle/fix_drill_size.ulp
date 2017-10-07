@@ -1,0 +1,19 @@
+#usage "Fix all PTH path to (diameter 70, drill size 45)"
+
+output("/home/tuankiet65/nice.src", "wt") {
+    library(L) {
+        L.packages(P) {
+            if (P.name == "STM32F411_DISCOVERY") {    
+                P.contacts(C) {
+		    if (C.pad) {
+			printf("CHANGE DIAMETER 70 (%f %f);\n", u2mil(C.pad.x), u2mil(C.pad.y));
+			printf("CHANGE DRILL 45 (%f %f);\n", u2mil(C.pad.x), u2mil(C.pad.y));
+			printf("CHANGE SHAPE ROUND (%f %f);\n", u2mil(C.pad.x), u2mil(C.pad.y));
+		    }
+                }
+            }
+        }
+    }
+}
+
+exit("SCRIPT /home/tuankiet65/nice;\n");

@@ -1328,7 +1328,7 @@ F 3 "" H 12700 1100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 11100 4900 2    60   ~ 0
-LED_RED
+LED_GREEN
 Text Label 1000 4100 0    60   ~ 0
 LED_BLUE
 Text Label 11100 2200 2    60   ~ 0
@@ -1488,11 +1488,12 @@ USER_BUTTON
 Text Label 1000 4000 0    60   ~ 0
 D6
 Text Label 11100 4700 2    60   ~ 0
-D7
-Text Label 11100 4800 2    60   ~ 0
 D8
-Text Label 11100 2600 2    60   ~ 0
+Text Label 11100 4800 2    60   ~ 0
+LED_RED
+Text Label 1000 4200 0    60   ~ 0
 LED_WHITE
+NoConn ~ 10350 2600
 NoConn ~ 13050 7150
 $Comp
 L Logo_Open_Hardware_Large #LOGO1
@@ -2368,11 +2369,7 @@ Wire Wire Line
 	10350 2200 11150 2200
 Wire Wire Line
 	10350 2300 11150 2300
+NoConn ~ 11150 5000
 NoConn ~ 950  3500
 NoConn ~ 950  3600
-Text Label 11100 5000 2    60   ~ 0
-LED_GREEN
-Wire Wire Line
-	10350 2600 11150 2600
-NoConn ~ 950  4200
 $EndSCHEMATC
