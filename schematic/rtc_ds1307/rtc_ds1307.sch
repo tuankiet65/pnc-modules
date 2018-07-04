@@ -1,0 +1,450 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:74xgxx
+LIBS:Altera
+LIBS:ESD_Protection
+LIBS:LEM
+LIBS:Lattice
+LIBS:Oscillators
+LIBS:Power_Management
+LIBS:RFSolutions
+LIBS:Worldsemi
+LIBS:Xicor
+LIBS:Zilog
+LIBS:ac-dc
+LIBS:actel
+LIBS:allegro
+LIBS:analog_devices
+LIBS:battery_management
+LIBS:bbd
+LIBS:bosch
+LIBS:brooktre
+LIBS:cmos_ieee
+LIBS:dc-dc
+LIBS:diode
+LIBS:elec-unifil
+LIBS:ftdi
+LIBS:gennum
+LIBS:graphic_symbols
+LIBS:hc11
+LIBS:infineon
+LIBS:intersil
+LIBS:ir
+LIBS:leds
+LIBS:logic_programmable
+LIBS:maxim
+LIBS:mechanical
+LIBS:microchip_dspic33dsc
+LIBS:microchip_pic10mcu
+LIBS:microchip_pic12mcu
+LIBS:microchip_pic16mcu
+LIBS:microchip_pic18mcu
+LIBS:microchip_pic24mcu
+LIBS:microchip_pic32mcu
+LIBS:modules
+LIBS:motor_drivers
+LIBS:msp430
+LIBS:nordicsemi
+LIBS:nxp
+LIBS:nxp_armmcu
+LIBS:onsemi
+LIBS:powerint
+LIBS:pspice
+LIBS:references
+LIBS:rfcom
+LIBS:sensors
+LIBS:silabs
+LIBS:stm32
+LIBS:stm8
+LIBS:supertex
+LIBS:transf
+LIBS:triac_thyristor
+LIBS:ttl_ieee
+LIBS:video
+LIBS:wiznet
+LIBS:zetex
+LIBS:rtc_ds1307-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L DS1307+ U1
+U 1 1 5A797A41
+P 3650 4000
+F 0 "U1" H 3920 4550 50  0000 C CNN
+F 1 "DS1307+" H 3950 3450 50  0000 C CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm_Socket" H 3650 4000 50  0001 C CNN
+F 3 "" H 3650 4000 50  0001 C CNN
+	1    3650 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Crystal Y1
+U 1 1 5A797BF4
+P 6150 5000
+F 0 "Y1" H 6150 5150 50  0000 C CNN
+F 1 "32768" H 6150 4850 50  0000 C CNN
+F 2 "Crystals:Crystal_C26-LF_d2.1mm_l6.5mm_Horizontal" H 6150 5000 50  0001 C CNN
+F 3 "" H 6150 5000 50  0001 C CNN
+	1    6150 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_01x04 J1
+U 1 1 5A797D63
+P 5550 3350
+F 0 "J1" H 5550 3550 50  0000 C CNN
+F 1 "Conn_01x04" H 5550 3050 50  0000 C CNN
+F 2 "Connectors_JST:JST_XH_S04B-XH-A_04x2.50mm_Angled" H 5550 3350 50  0001 C CNN
+F 3 "" H 5550 3350 50  0001 C CNN
+	1    5550 3350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Battery_Cell BT1
+U 1 1 5A797E10
+P 7900 4750
+F 0 "BT1" H 8000 4850 50  0000 L CNN
+F 1 "Battery_Cell" H 8000 4750 50  0000 L CNN
+F 2 "S8411-45R:S8411-45R" V 7900 4810 50  0001 C CNN
+F 3 "" V 7900 4810 50  0001 C CNN
+	1    7900 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 5A797FB8
+P 6150 4450
+F 0 "R1" V 6230 4450 50  0000 C CNN
+F 1 "10k" V 6150 4450 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6080 4450 50  0001 C CNN
+F 3 "" H 6150 4450 50  0001 C CNN
+	1    6150 4450
+	0    -1   -1   0   
+$EndComp
+Text Label 2650 3700 0    60   ~ 0
+SCL
+Text Label 2650 3900 0    60   ~ 0
+SDA
+Text Label 2650 4200 0    60   ~ 0
+XTAL1
+Text Label 2650 4400 0    60   ~ 0
+XTAL2
+$Comp
+L +5V #PWR01
+U 1 1 5A7984B0
+P 3650 3250
+F 0 "#PWR01" H 3650 3100 50  0001 C CNN
+F 1 "+5V" H 3650 3390 50  0000 C CNN
+F 2 "" H 3650 3250 50  0001 C CNN
+F 3 "" H 3650 3250 50  0001 C CNN
+	1    3650 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR02
+U 1 1 5A7986F6
+P 3650 4750
+F 0 "#PWR02" H 3650 4500 50  0001 C CNN
+F 1 "GND" H 3650 4600 50  0000 C CNN
+F 2 "" H 3650 4750 50  0001 C CNN
+F 3 "" H 3650 4750 50  0001 C CNN
+	1    3650 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L +BATT #PWR03
+U 1 1 5A798992
+P 4500 4200
+F 0 "#PWR03" H 4500 4050 50  0001 C CNN
+F 1 "+BATT" H 4500 4340 50  0000 C CNN
+F 2 "" H 4500 4200 50  0001 C CNN
+F 3 "" H 4500 4200 50  0001 C CNN
+	1    4500 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L +BATT #PWR04
+U 1 1 5A798BD9
+P 7900 4450
+F 0 "#PWR04" H 7900 4300 50  0001 C CNN
+F 1 "+BATT" H 7900 4590 50  0000 C CNN
+F 2 "" H 7900 4450 50  0001 C CNN
+F 3 "" H 7900 4450 50  0001 C CNN
+	1    7900 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L -BATT #PWR05
+U 1 1 5A798BFF
+P 7900 4950
+F 0 "#PWR05" H 7900 4800 50  0001 C CNN
+F 1 "-BATT" H 7900 5090 50  0000 C CNN
+F 2 "" H 7900 4950 50  0001 C CNN
+F 3 "" H 7900 4950 50  0001 C CNN
+	1    7900 4950
+	-1   0    0    1   
+$EndComp
+Text Label 5650 5000 0    60   ~ 0
+XTAL1
+Text Label 6650 5000 2    60   ~ 0
+XTAL2
+$Comp
+L +5V #PWR06
+U 1 1 5A799AF8
+P 6000 3200
+F 0 "#PWR06" H 6000 3050 50  0001 C CNN
+F 1 "+5V" H 6000 3340 50  0000 C CNN
+F 2 "" H 6000 3200 50  0001 C CNN
+F 3 "" H 6000 3200 50  0001 C CNN
+	1    6000 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR07
+U 1 1 5A799BC6
+P 6000 3600
+F 0 "#PWR07" H 6000 3350 50  0001 C CNN
+F 1 "GND" H 6000 3450 50  0000 C CNN
+F 2 "" H 6000 3600 50  0001 C CNN
+F 3 "" H 6000 3600 50  0001 C CNN
+	1    6000 3600
+	1    0    0    -1  
+$EndComp
+Text Label 6000 3350 2    60   ~ 0
+SDA
+Text Label 6000 3450 2    60   ~ 0
+SCL
+$Comp
+L R R2
+U 1 1 5A799CC9
+P 6150 4650
+F 0 "R2" V 6230 4650 50  0000 C CNN
+F 1 "10k" V 6150 4650 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6080 4650 50  0001 C CNN
+F 3 "" H 6150 4650 50  0001 C CNN
+	1    6150 4650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L +5V #PWR08
+U 1 1 5A799F70
+P 5700 4500
+F 0 "#PWR08" H 5700 4350 50  0001 C CNN
+F 1 "+5V" H 5700 4640 50  0000 C CNN
+F 2 "" H 5700 4500 50  0001 C CNN
+F 3 "" H 5700 4500 50  0001 C CNN
+	1    5700 4500
+	1    0    0    -1  
+$EndComp
+Text Label 6650 4450 2    60   ~ 0
+SDA
+Text Label 6650 4650 2    60   ~ 0
+SCL
+$Comp
+L +5V #PWR09
+U 1 1 5A79BB8B
+P 6450 3200
+F 0 "#PWR09" H 6450 3050 50  0001 C CNN
+F 1 "+5V" H 6450 3340 50  0000 C CNN
+F 2 "" H 6450 3200 50  0001 C CNN
+F 3 "" H 6450 3200 50  0001 C CNN
+	1    6450 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG010
+U 1 1 5A79BBCC
+P 6450 3550
+F 0 "#FLG010" H 6450 3625 50  0001 C CNN
+F 1 "PWR_FLAG" H 6450 3700 50  0000 C CNN
+F 2 "" H 6450 3550 50  0001 C CNN
+F 3 "" H 6450 3550 50  0001 C CNN
+	1    6450 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR011
+U 1 1 5A79BBEC
+P 6900 3600
+F 0 "#PWR011" H 6900 3350 50  0001 C CNN
+F 1 "GND" H 6900 3450 50  0000 C CNN
+F 2 "" H 6900 3600 50  0001 C CNN
+F 3 "" H 6900 3600 50  0001 C CNN
+	1    6900 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG012
+U 1 1 5A79BD2E
+P 6900 3150
+F 0 "#FLG012" H 6900 3225 50  0001 C CNN
+F 1 "PWR_FLAG" H 6900 3300 50  0000 C CNN
+F 2 "" H 6900 3150 50  0001 C CNN
+F 3 "" H 6900 3150 50  0001 C CNN
+	1    6900 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG013
+U 1 1 5A79C1BB
+P 8750 4900
+F 0 "#FLG013" H 8750 4975 50  0001 C CNN
+F 1 "PWR_FLAG" H 8750 5050 50  0000 C CNN
+F 2 "" H 8750 4900 50  0001 C CNN
+F 3 "" H 8750 4900 50  0001 C CNN
+	1    8750 4900
+	-1   0    0    1   
+$EndComp
+$Comp
+L +BATT #PWR014
+U 1 1 5A79C1EA
+P 8750 4550
+F 0 "#PWR014" H 8750 4400 50  0001 C CNN
+F 1 "+BATT" H 8750 4690 50  0000 C CNN
+F 2 "" H 8750 4550 50  0001 C CNN
+F 3 "" H 8750 4550 50  0001 C CNN
+	1    8750 4550
+	1    0    0    -1  
+$EndComp
+NoConn ~ 4250 3700
+Text Notes 2750 2900 0    100  ~ 20
+DS1307
+Text Notes 5300 2850 0    100  ~ 20
+Connector
+Text Notes 5300 4150 0    100  ~ 20
+I2C & Oscillator
+Text Notes 7300 4150 0    100  ~ 20
+Backup battery (CR2032)
+Wire Wire Line
+	3050 3700 2650 3700
+Wire Wire Line
+	3050 3900 2650 3900
+Wire Wire Line
+	3050 4200 2650 4200
+Wire Wire Line
+	3050 4400 2650 4400
+Wire Wire Line
+	3650 3250 3650 3400
+Wire Wire Line
+	3650 4600 3650 4750
+Wire Wire Line
+	4250 4300 4500 4300
+Wire Wire Line
+	4500 4300 4500 4200
+Wire Wire Line
+	7900 4550 7900 4450
+Wire Wire Line
+	7900 4850 7900 4950
+Wire Wire Line
+	5650 5000 6000 5000
+Wire Wire Line
+	6300 5000 6650 5000
+Wire Wire Line
+	5750 3250 6000 3250
+Wire Wire Line
+	6000 3250 6000 3200
+Wire Wire Line
+	5750 3550 6000 3550
+Wire Wire Line
+	6000 3550 6000 3600
+Wire Wire Line
+	5750 3350 6000 3350
+Wire Wire Line
+	5750 3450 6000 3450
+Wire Wire Line
+	6300 4450 6650 4450
+Wire Wire Line
+	6300 4650 6650 4650
+Wire Wire Line
+	6450 3200 6450 3550
+Wire Wire Line
+	6900 3150 6900 3600
+Wire Wire Line
+	8750 4550 8750 4900
+Wire Notes Line
+	5200 2600 5200 5300
+Wire Notes Line
+	5200 3900 9500 3900
+Wire Notes Line
+	7200 2600 7200 5300
+Wire Notes Line
+	2600 2600 7200 2600
+Wire Notes Line
+	2500 5300 9500 5300
+Wire Notes Line
+	9500 5300 9500 3900
+Wire Notes Line
+	2500 5300 2500 2600
+Wire Notes Line
+	2500 2600 2650 2600
+Wire Wire Line
+	6000 4450 5950 4450
+Wire Wire Line
+	5950 4450 5950 4650
+Wire Wire Line
+	5950 4650 6000 4650
+Wire Wire Line
+	5700 4550 5950 4550
+Connection ~ 5950 4550
+Wire Wire Line
+	5700 4550 5700 4500
+Wire Wire Line
+	7900 4900 8200 4900
+Connection ~ 7900 4900
+$Comp
+L GND #PWR015
+U 1 1 5A9DE7AB
+P 8200 4950
+F 0 "#PWR015" H 8200 4700 50  0001 C CNN
+F 1 "GND" H 8200 4800 50  0000 C CNN
+F 2 "" H 8200 4950 50  0001 C CNN
+F 3 "" H 8200 4950 50  0001 C CNN
+	1    8200 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 4900 8200 4950
+$EndSCHEMATC

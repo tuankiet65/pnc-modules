@@ -29,11 +29,11 @@
 			int i;
 
 			for (i = 0; i < 4; i++){
-				set_pin_mode(row[i], OUTPUT);
 				if (i == row_num){
+					set_pin_mode(row[i], OUTPUT);
 					digital_write(row[i], HIGH);
 				} else {
-					digital_write(row[i], LOW);
+					set_pin_mode(row[i], INPUT);
 				}
 			}
 

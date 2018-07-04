@@ -18,7 +18,7 @@ CXX_FLAGS = -Os \
            -fno-threadsafe-statics
 CXX_FLAGS_ATTINY2313 = -mmcu=attiny2313 -DF_CPU=8000000UL
 
-main: lcd_block
+main: numpad_block
 
 lcd_block: io.o hd44780.o hard_uart.o protocol.o lcd_16x2_block.cpp
 	$(CXX) $(CXX_FLAGS) $(CXX_FLAGS_ATTINY2313) $(BUILD_FOLDER)/io.o $(BUILD_FOLDER)/hd44780.o $(BUILD_FOLDER)/hard_uart.o $(BUILD_FOLDER)/protocol.o lcd_16x2_block.cpp -o $(BUILD_FOLDER)/lcd_16x2_block.elf
